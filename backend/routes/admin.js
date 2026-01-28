@@ -83,41 +83,47 @@ router.get('/pending-approvals', authenticateToken, async (req, res) => {
 });
 
 // Approve entity
-router.post('/approve/:id/:type', authenticateToken, async (req, res) => {
+router.patch('/restaurants/:id/approve', authenticateToken, async (req, res) => {
   try {
-    const { id, type } = req.params;
-
-    if (type === 'restaurant') {
-      await Restaurant.findByIdAndUpdate(id, { isVerified: true });
-    } else if (type === 'orphanage') {
-      await Orphanage.findByIdAndUpdate(id, { isVerified: true });
-    } else {
-      return res.status(400).json({ error: 'Invalid entity type' });
-    }
-
-    res.json({ message: `${type} approved successfully` });
+    const { id } = req.params;
+    await Restaurant.findByIdAndUpdate(id, { isVerified: true });
+    res.json({ message: 'Restaurant approved successfully' });
   } catch (error) {
-    console.error('Error approving entity:', error);
+    console.error('Error approving restaurant:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.patch('/orphanages/:id/approve', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Orphanage.findByIdAndUpdate(id, { isVerified: true });
+    res.json({ message: 'Orphanage approved successfully' });
+  } catch (error) {
+    console.error('Error approving orphanage:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 // Reject entity
-router.post('/reject/:id/:type', authenticateToken, async (req, res) => {
+router.patch('/restaurants/:id/reject', authenticateToken, async (req, res) => {
   try {
-    const { id, type } = req.params;
-
-    if (type === 'restaurant') {
-      await Restaurant.findByIdAndUpdate(id, { isActive: false });
-    } else if (type === 'orphanage') {
-      await Orphanage.findByIdAndUpdate(id, { isActive: false });
-    } else {
-      return res.status(400).json({ error: 'Invalid entity type' });
-    }
-
-    res.json({ message: `${type} rejected` });
+    const { id } = req.params;
+    await Restaurant.findByIdAndUpdate(id, { isActive: false });
+    res.json({ message: 'Restaurant rejected' });
   } catch (error) {
-    console.error('Error rejecting entity:', error);
+    console.error('Error rejecting restaurant:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.patch('/orphanages/:id/reject', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Orphanage.findByIdAndUpdate(id, { isActive: false });
+    res.json({ message: 'Orphanage rejected' });
+  } catch (error) {
+    console.error('Error rejecting orphanage:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

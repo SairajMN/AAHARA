@@ -31,7 +31,7 @@ const authenticateToken = async (req, res, next) => {
 };
 
 // Get restaurant profile
-router.get('/profile/:userId', authenticateToken, async (req, res) => {
+router.get('/user/:userId', authenticateToken, async (req, res) => {
   try {
     const restaurant = await Restaurant.findOne({ userId: req.params.userId });
     if (!restaurant) {

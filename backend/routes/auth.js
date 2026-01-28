@@ -139,4 +139,11 @@ router.get('/verify', async (req, res) => {
   }
 });
 
+// Sign out (logout endpoint for frontend compatibility)
+router.post('/signout', async (req, res) => {
+  // In a real implementation, you might want to blacklist the token
+  // For now, we'll just return success since the frontend will clear the token
+  res.json({ message: 'Signed out successfully' });
+});
+
 module.exports = router;

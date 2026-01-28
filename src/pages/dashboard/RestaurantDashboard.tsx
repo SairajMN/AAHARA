@@ -63,8 +63,9 @@ const RestaurantDashboard = () => {
 
         // Calculate stats
         const activeCount =
-          listingsResponse.data?.filter((l: any) => l.status === "available")
-            .length || 0;
+          listingsResponse.data?.filter(
+            (l: FoodListing) => l.status === "available",
+          ).length || 0;
         const totalCount = listingsResponse.data?.length || 0;
 
         setStats({
@@ -107,19 +108,19 @@ const RestaurantDashboard = () => {
   const statsDisplay = [
     {
       label: "Total Listings",
-      value: stats.totalListings.toString(),
+      value: stats.totalListings?.toString() || "0",
       icon: Package,
       color: "text-primary",
     },
     {
       label: "Active Listings",
-      value: stats.activeListings.toString(),
+      value: stats.activeListings?.toString() || "0",
       icon: Clock,
       color: "text-coral",
     },
     {
       label: "Claims Today",
-      value: stats.claimedToday.toString(),
+      value: stats.claimedToday?.toString() || "0",
       icon: CheckCircle,
       color: "text-orange",
     },

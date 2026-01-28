@@ -115,25 +115,25 @@ const AdminDashboard = () => {
   const statsDisplay = [
     {
       label: "Total Restaurants",
-      value: stats.totalRestaurants.toString(),
+      value: stats.totalRestaurants?.toString() || "0",
       icon: Building2,
       color: "text-primary",
     },
     {
       label: "Total Orphanages",
-      value: stats.totalOrphanages.toString(),
+      value: stats.totalOrphanages?.toString() || "0",
       icon: Heart,
       color: "text-pink",
     },
     {
       label: "Active Listings",
-      value: stats.activeListings.toString(),
+      value: stats.activeListings?.toString() || "0",
       icon: BarChart3,
       color: "text-coral",
     },
     {
       label: "Total Claims",
-      value: stats.totalClaims.toString(),
+      value: stats.totalClaims?.toString() || "0",
       icon: Users,
       color: "text-orange",
     },
